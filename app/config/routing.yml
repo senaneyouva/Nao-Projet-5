@@ -1,0 +1,20 @@
+bt_admin:
+    resource: "@BTAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+bt_user:
+    resource: "@BTUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+bt_nao:
+    resource: "@BTNaoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+logout:
+    path: /logout
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

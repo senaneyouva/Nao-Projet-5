@@ -1,0 +1,49 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    encoders:
+            harsh:
+                algorithm: bcrypt
+                cost: 15
+
+    providers:
+        main:
+            entity:
+                class: BT\UserBundle\Entity\User
+                property: username
+
+    role_hierarchy:
+            ROLE_ADMIN:       [ROLE_NATURALISTE, ROLE_OBSERVATEUR]
+            ROLE_NATURALISTE: ROLE_OBSERVATEUR
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            anonymous: true
+            provider: main
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: observation
+            logout:
+                path:       logout
+                target:     login
+
+    access_control:
+          - { path: ^/dashboard, roles: [ROLE_ADMIN, ROLE_OBSERVATEUR, ROLE_NATURALISTE] }
+          - { path: ^/observation/single, roles: [ROLE_ADMIN, ROLE_OBSERVATEUR, ROLE_NATURALISTE] }
+          - { path: ^/dasboard/blog, roles: [ROLE_ADMIN] }
+          - { path: ^/dashboard/users, roles: [ROLE_ADMIN] }
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
