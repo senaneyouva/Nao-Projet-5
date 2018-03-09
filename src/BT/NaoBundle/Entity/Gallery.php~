@@ -1,0 +1,127 @@
+<?php
+
+namespace BT\NaoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
+/**
+ * Gallery
+ *
+ * @ORM\Table(name="gallery")
+ * @ORM\Entity(repositoryClass="BT\NaoBundle\Repository\GalleryRepository")
+ */
+class Gallery
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imagename", type="string", length=255, nullable=true)
+     */
+    private $imagename;
+
+    /**
+     * @Vich\UploadableField(mapping="gallery", fileNameProperty="imagename")
+     */
+    private $imageFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alt", type="string", length=255, nullable=true)
+     */
+    private $alt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     */
+    private $post;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set imagename
+     *
+     * @param string $imagename
+     *
+     * @return Gallery
+     */
+    public function setImagename($imagename)
+    {
+        $this->imagename = $imagename;
+
+        return $this;
+    }
+
+    /**
+     * Get imagename
+     *
+     * @return string
+     */
+    public function getImagename()
+    {
+        return $this->imagename;
+    }
+
+    /**
+     * Set alt
+     *
+     * @param string $alt
+     *
+     * @return Gallery
+     */
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * Get alt
+     *
+     * @return string
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
+     * @param mixed $imageFile
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+}
+

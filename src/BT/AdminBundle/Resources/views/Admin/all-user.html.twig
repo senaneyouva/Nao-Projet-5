@@ -1,0 +1,56 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+         <p >
+         {% for message in app.flashes('success5') %}
+        <div class="alert alert-danger">
+                {{ message }}
+        </div>
+            {% endfor %}
+        </p>
+  
+<h3 class="couleur-bleu position-user"> Gestion des comptes utilisateurs  </h3>
+
+    <!-- DYNAMIC CONTENT -->
+  <div class="pusher">
+    <div class="ui vertical center aligned very padded segment">
+        <div class="ui container">
+    
+        <div class="ui divider"></div>
+  <table class="ui celled table">
+    <thead>
+      <tr><th class="text-center">Nom</th>
+      <th class="text-center">Prenom</th>
+      <th class="text-center">Mail</th>
+      <th class="text-center">Identifiant</th>
+      <th class="text-center">Statut</th>
+    </tr></thead>
+    <tbody>
+        {% for user in users  %}
+      <tr>
+        <td>
+          <h4 class="ui header text-center">      
+              {{ user.lastname }}
+
+        </h4></td>
+        <td class="text-center">
+    {{ user.firstname }}
+        </td>
+        <td class="text-center">{{ user.email }}</td>
+        <td class="positive text-center">{{ user.username }}</td>
+        <td class="center aligned text-center">
+       
+        {% if user.roles == 'ROLE_ADMIN' %}
+            <a href="{{ path('dashboard-user-delete', {'id': user.id}) }}"> <button type="button" disabled class="btn btn-danger">Suprimer le compte </button></a>
+        {% else %}
+            <a href="{{ path('dashboard-user-delete', {'id': user.id}) }}"> <button class="btn btn-danger">Suprimer le compte </button></a>
+        {% endif %}
+        </td>
+      </tr>
+           {% endfor %}
+        
+    </tbody>
+  </table>
+
+    </div>  
+
+{% endblock %}

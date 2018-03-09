@@ -1,0 +1,4 @@
+services:
+#    bt_admin.example:
+#        class: BT\AdminBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

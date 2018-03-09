@@ -1,0 +1,55 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+    <div class="positionLogo">
+        <div id="tab1 text-center">
+       
+
+  <div class="cercleAdmin color-text-bleu position-profil position-global" ><i class="glyphicon glyphicon-user iconFonctionnement color-logo"></i></div></div> <h1 class="colorAdmin hauteur-text position-global">Bienvenue {{ app.user.firstname }} </h1>
+            {% if is_granted('ROLE_ADMIN') %}
+ <div id="tab1 colorText"><h2 class="header position-global colorText">Vous avez <a href="{{ path('dashboard-to-validate') }}">{{ toValid }} observation(s)</a> en attente  de validation </h2> 
+  <div id="tab1 colorText"><h2 class="header position-global">Vous avez <a href="{{ path('dashboard-users') }}" >{{ naturalisteCount }} naturaliste(s)</a> en attente  de validation </h2> 
+
+      </div>
+
+
+     {% elseif is_granted('ROLE_NATURALISTE')%}
+        <div id="tab1"><h2 class="header position-global">Vous avez <a href="{{ path('dashboard-to-validate') }}" class="colorText">{{ toValid }} observation(s)</a> en attente  de validation </h2> </div>
+
+        {% elseif is_granted('ROLE_OBSERVATEUR')%}
+        <div id="tab1 colorText"><h2 class="header position-global"> {{ noconfirm }} observation(s) en attente de validation  </h2>
+        <h2 class="header position-global"> {{ confirm }} observation(s) validée  </h2>
+        <h2 class="header position-global"> {{ refuse }} observation(s) refusée  </h2>
+
+             {% endif %}
+
+        <div class="three-obs">
+           <div class="container">
+               <h1 class="text-center colorAdmin">Dernières observations</h1>
+               <div class="row">
+                   {% for observation in observations  %}
+                       <div class="col-md-4 col-obs">
+                           <div class="card text-center">
+                               <div class="card-header-observation">
+                                   {% if observation.observationName == null %}
+                                       {% image '@BTNaoBundle/Resources/public/images/default-img.jpeg' %}
+                                       <img src="{{ asset_url }}" class="img-responsive">
+                                       {% endimage %}
+                                   {% else %}
+                                       <img src="{{ vich_uploader_asset(observation, 'observationFile') }}" class="img-responsive">
+                                   {% endif %}
+                               </div>
+                               <div class="card-body">
+                                   <h4>{{ observation.bird.nomVern }}</h4>
+                                   <p>Observé le {{ observation.date|date('d/m/Y') }}</p>
+                                   <a href="{{ path('observation-single', {'id': observation.id} ) }}" class="btn btn-default btn-four">Consulter l'observation</a>
+
+                               </div>
+                           </div>
+                       </div>
+                   {% endfor %}
+
+               </div>
+           </div>
+        </div>
+    </div>
+{% endblock %}

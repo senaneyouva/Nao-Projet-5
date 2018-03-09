@@ -1,0 +1,93 @@
+{% extends 'BTNaoBundle::layout.html.twig' %}
+{% block title %} Contact - {{ parent() }} {% endblock %}
+{% block body %}
+    {% image '@BTNaoBundle/Resources/public/images/contact-us.jpeg' %}
+    <div class="img-banner" style="background: url({{ asset_url }}) no-repeat !important; height: 385px;">
+    {% endimage %}
+        <h1 class="contact-h1">Heureux de vous rencontrer.</h1>
+    </div>
+    <div class="container">
+        <p class="text-justify text-contact">
+            Vous avez une question à poser à l'association <span class="text-green">Nos amis les Oiseaux</span>,
+            une remarque à faire, ou une experience à nous raconter ? Exprimez vous à l'aide de notre formulaire de contact.
+        </p>
+        <p class="text-justify text-contact">
+            Les bénévoles de l'association seront heureux de vous répondre !
+        </p>
+        <div class="row contact-form">
+            {% for success in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ success }}
+                </div>
+            {% endfor %}
+            {% for error in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            {{ form_start(form) }}
+            <div class="col-md-6 form-group">
+                {{ form_widget(form.firstname) }}
+                {{ form_errors(form.firstname) }}
+            </div>
+            <div class="col-md-6 form-group">
+                {{ form_widget(form.lastname) }}
+                {{ form_errors(form.lastname) }}
+            </div>
+            <div class="col-md-12 form-group">
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <div class="col-md-12 form-group">
+                {{ form_widget(form.message) }}
+                {{ form_errors(form.message) }}
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ form_widget(form.submit, {'label': 'Soumettre'}) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="row text-center contact-infos">
+            <hr class="hr-contact">
+            <div class="col-md-6">
+                <h4 class="h4-contact">Nos locaux</h4>
+                <p>7 Cité de Paradis - 75010 Paris</p>
+            </div>
+            <div class="col-md-6">
+                <h4 class="h4-contact">Notre email</h4>
+                <p>nosamislesoiseaux@nao.com</p>
+            </div>
+            <hr class="hr-contact">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 class="h4-contact">Téléphone</h4>
+                        01.02.03.04.04
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="h4-contact">Suivez-nous</h4>
+                        <a href="#"> <i class="fa fa fa-facebook fa-1x facebook"></i></a> <a href="#"> <i class="fa fa fa-twitter fa-1x twitter"></i></a> <a href="#"> <i class="fa fa fa-pinterest fa-1x pinterest"></i></a>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="h4-contact">Faire un don</h4>
+                        <a href="http://helloasso.com">helloasso</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div id="mapid" style="height: 450px;"></div>
+    <script>
+        var mymap = L.map('mapid').setView([48.8747265, 2.3505516999999827], 17);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxlY2t2aW5jZW50IiwiYSI6ImNqOWgxcmVnZzJ6YjYycXQ0c2lwd3NwYWQifQ.ECfnUX5KCYOByUbS0noiLg', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiYWxlY2t2aW5jZW50IiwiYSI6ImNqOWgxcmVnZzJ6YjYycXQ0c2lwd3NwYWQifQ.ECfnUX5KCYOByUbS0noiLg'
+        }).addTo(mymap);
+        L.marker([48.8747265, 2.3505516999999827]).addTo(mymap);
+    </script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+    <h1  class="titre-informations">Nouvel Article </h1>
+    <div class="col-md-7  position-informations ">
+            <div class="row">
+                {{ form_start(form) }}
+                <div class="col-sm-12 col-md-12 ">
+                    {{ form_widget(form.title) }}
+                </div>
+               <div class="col-sm-12 col-xs-11 col-md-12">
+          <div class="row">
+                        {{ form_widget(form.imageFile,{'attr': {'class': 'position-w'}})}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-12 col-md-12">
+                    {{ form_widget(form.content) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="text-center">
+                  {{ form_widget(form.save,{'label':  "Publier l'article  ", 'attr': {'class': 'btn btn-default btn-four'}})}}
+                </div>
+            </div>
+            {{ form_end(form) }}
+    </div>
+
+      <script src="{{ asset('tinymce/jquery.tinymce.min.js') }}"></script>
+      <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
+    <script>tinymce.init({ selector:'textarea', language:'fr_FR', toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+            content_css: '//www.tinymce.com/css/codepen.min.css'});</script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+     
+
+
+{% endblock %}

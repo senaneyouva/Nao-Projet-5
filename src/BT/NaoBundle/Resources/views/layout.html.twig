@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Nos Amis les Oiseaux{% endblock %}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    {% stylesheets '@BTNaoBundle/Resources/public/css/style.css'
+    '@BTNaoBundle/Resources/public/css/owl.carousel.min.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="icon" href="http://projet3.a-vincent.fr/favicon.ico">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script><link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-flat.css" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#252e39"
+                    },
+                    "button": {
+                        "background": "#14a7d0"
+                    }
+                },
+                "content": {
+                    "message": "En poursuivant votre navigation, vous acceptez le dépôt de cookies tiers destinés à vous proposer des vidéos, des boutons de partage, des remontées de contenus de plateformes sociales.",
+                    "dismiss": "J'ai compris",
+                    "link": "En savoir plus",
+                    "href": "https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi"
+                }
+            })});
+    </script>
+</head>
+<style type="text/css">
+
+    .color-text3 {
+        /* Les liens "au repos" et déjà visités antérieurement */
+        color: #ffffff; /* couleur blanche */
+    }
+
+    .barre1{
+
+        padding-top: 15px;
+    }
+    .padding{
+        margin-top: -18px;
+
+    }
+    .ti{
+        zoom:130%;
+
+    }
+    .bouton-barre{
+        background-color:#17a1aa; color: white !important; border: 1px 1px 1px 1px solid #E7E7DE; width: 120px; }
+
+
+    @media all and (min-width: 0px) and (max-width: 420px)
+    {
+        .padding{
+            margin-left: -28px !important;
+            zoom:78% !important;
+        }
+
+
+
+    }
+</style>
+
+<body>
+<header>
+    <div class="topBar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-offset-2 col-xs-7">
+                    <p class="textBar barre1 ">Rejoinez l'association NAO et contribuez à son développement</p>
+                </div>
+                <a href="{{ path('adherer') }}">  <button class="btn btn-default emplace remplaci petita bajij btn-green"> Adhésion  </button>
+                    <button class="btn btn-default emplace format-text petita lamarge bouton-barre btn-green"><a class="color-text3" href="https://www.helloasso.com/">Faire un don</a></button></a>
+            </div>
+        </div>
+    </div>
+    <div class="ti">
+        <div class="navbar navbar-inverse lona " >
+            <div class="navbar-header center">
+                <button type="button " data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle ">
+                    <span class="icon-bar vinda"></span>
+                    <span class="icon-bar vinda"></span>
+                    <span class="icon-bar vinda"></span>
+                </button>
+                <span class="navbar-brand position padding"><a href="{{ path('home') }}"><img src="{{asset('images/COMPANY1.png')}}"/>
+                   </a></span>
+            </div>
+            <div class="collapse navbar-collapse ">
+                <ul class="nav navbar-nav navbar-right taille kouadi">
+                    <li class="monda1 kinda"><a  class="juba" href="{{ path('home') }}">Accueil </a></li>
+                    <li class="monda1 kinda"><a class="juba" href="{{ path('observation') }}">Observation  </a></li>
+                    <li class="monda1 kinda"><a class="juba" href="{{ path('blog') }}">Blog</a></li>
+                    <li class="monda1 kinda nova"><a class="juba" href="{{ path('home') }}#about">À propos </a></li>
+                    <li class="monda1 kinda"><a class="juba" href="{{ path('contact') }}">Contact </a></li>
+
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if app.user and is_granted('ROLE_OBSERVATEUR') %}
+                            <li class="monda1 kinda" {% if adminMenu is defined %}active{% endif %}>
+                                <a class="juba"  href="{{ path('dashboard') }}">Administration</a>
+                            </li>
+                            <li class="monda1 kinda">
+                                <a class="juba" href="{{ path('logout') }}">Déconnexion</a>
+                            </li>
+                        {% endif %} {% else %}
+                        <li class="monda1 kinda">
+                            <a class="juba"  href="{{ path('dashboard') }}">Connexion</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+
+{% block body %}
+{% endblock %}
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Pour recevoir toutes nos dernières actualités, abonnez vous à notre newsletter.</p>
+                        <form action="{{ path('newsletter') }}" class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-mail" placeholder="email" name="email">
+                            </div>
+                            <button class="btn btn-green">S'abonner</button>
+                        </form>
+                        {% for success in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ success }}
+                            </div>
+                        {% endfor %}
+                        {% for error in app.flashes('error') %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <p>Rejoignez la communauté</p>
+                        <a href="https://facebook.com"><i class="fa fa-facebook fa-2x facebook"></i></a> <a href="https://twiiter.com"><i class="fa fa-twitter fa-2x twitter"></i></a>
+                        <a href="https://pinterest.com"><i class="fa fa-pinterest fa-2x pinterest"></i></a>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul class="menu">
+
+                        <li>
+                            <a href="{{ path('mentions') }}" class="format-text text-center footer-text">Mentions légales </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 ">
+                    <ul class="menu">
+
+                        <li>
+                            <a href="{{ path('home') }}" class=" footer-text "  >Accueil</a>
+                        </li>
+
+                        <li>
+
+                            <a href="{{ path('observation') }}" class=" footer-text">Observation </a>
+                        </li>
+
+                        <li>
+
+                            <a href="{{ path('blog') }}" class=" footer-text" >Blog</a>
+                        </li>
+
+                        <li>
+
+                            <a href="{{ path('dashboard') }}" class=" footer-text">Compte</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class=" col-sm-3 ">
+                    <ul class="menu">
+
+                        <li>
+                            <a href="{{ path('adherer') }}" class=" footer-text">Adhésion</a>
+                        </li>
+
+                        <li>
+                            <a href="http://helloasso.com" class=" footer-text">Faire un don</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-3">
+                    <ul class="adress">
+                        <li>
+                            <i class="fa fa-phone" aria-hidden="true"></i>+(33) 1 00 00 00 00
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> 7 Cité Paradis, 75010 Paris
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope" aria-hidden="true"></i> <a href="{{ path('contact') }}" class=" footer-text2">Formulaire de contact </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</footer>
+<footer class="record">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-">
+                <p class="text-center footer-text" > Copyright © 2017 - Site fictif dans le cadre d'un projet de formation</p>
+            </div>
+
+        </div>
+    </div>
+
+</footer>
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<!-- Javascript de Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script src="https://unpkg.com/flatpickr"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.min.js"></script>
+
+{% block javascript %}
+{% endblock %}
+
+
+
+</body>
+</html>

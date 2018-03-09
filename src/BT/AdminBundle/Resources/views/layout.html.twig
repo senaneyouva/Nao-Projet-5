@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nos Amis les Oiseaux</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script><link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    {% stylesheets '@BTAdminBundle/Resources/public/css/admin.css'
+    '@BTNaoBundle/Resources/public/css/owl.carousel.min.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+
+
+</head>
+<style type="text/css">
+</style>
+<body>
+<header>
+    <div class="topBar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-offset-2 col-xs-7">
+                    <p class="textBar barre1  ">Rejoinez l'association NAO et contribuez à son développement</p>
+                </div>
+                <a href="{{ path('adherer') }}"> <button class="btn btn-default emplace remplaci petita bajij"> Adhésion  </button>
+                    <button class="btn btn-default emplace format-text petita lamarge bouton-barre"><a href="https://www.helloasso.com/">Faire un don</a></button></a>
+            </div>
+        </div>
+    </div>
+    <div class="ti">
+        <div class="navbar navbar-inverse lona " >
+            <div class="navbar-header center">
+                <button type="button " data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle ">
+                    <span class="icon-bar vinda"></span>
+                    <span class="icon-bar vinda"></span>
+                    <span class="icon-bar vinda"></span>
+                </button>
+                <span class="navbar-brand position"><a href="{{ path('home') }}"><img class="zomm" src="{{asset('images/COMPANY1.png')}}"/>
+                   </a></span>
+            </div>
+            <div class="collapse navbar-collapse postion-padding ">
+                <ul class="nav navbar-nav navbar-right taille kouadi">
+                    <li class="monda1 kinda sizi-bar"><a  class="juba" href="{{ path('home') }}">Accueil </a></li>
+                    <li class="monda1 kinda sizi-bar"><a class="juba" href="{{ path('observation') }}">Observation  </a></li>
+                    <li class="monda1 kinda sizi-bar"><a class="juba" href="{{ path('blog') }}">Blog</a></li>
+                    <li class="monda1 kinda nova"><a class="juba" href="{{ path('home') }}#about">À propos </a></li>
+                    <li class="monda1 kinda sizi-bar "><a class="juba" href="{{ path('contact') }}">Contact </a></li>
+
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if app.user and is_granted('ROLE_OBSERVATEUR') %}
+                            <li class="monda1 kinda sizi-bar" {% if adminMenu is defined %}active{% endif %}>
+                                <a class="juba sizi-bar"  href="{{ path('dashboard') }}">Administration</a>
+                            </li>
+                            <li class="monda1 kinda">
+                                <a class="juba sizi-bar" href="{{ path('logout') }}">Déconnexion</a>
+                            </li>
+                        {% endif %} {% else %}
+                        <li class="monda1 kinda">
+                            <a class="juba sizi-bar"  href="{{ path('dashboard') }}">Connexion</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</header>
+{% if is_granted('ROLE_ADMIN') %}
+
+
+
+
+<div class="slidebar size right-position">
+    <ul>
+        <li><a href="{{ path('dashboard') }}" name="tab1 dimension"><i class="fa fa-tachometer" aria-hidden="true"></i><span class="adminText">Tableau de bord</span></a></li>
+
+        <li><a href="{{ path('dashboard-to-validate') }}" name="tab4 dimension"><i class="fa fa-check-square"></i><span class="adminText">Valider observations</span></a></li>
+        <li><a href="{{ path('dashboard-users') }}" name="tab1 dimension"><i class="fa fa-user" aria-hidden="true"></i><span class="adminText">Valider Naturalistes</span></a></li>
+        <li><a href="{{ path('observation') }}" name="tab3 dimension"><i class="fa fa-pencil"></i > <span class="adminText "> Ajouter observations </span></a></li>
+        <li><a href="{{path('dashboard-blog')}}"><i class="fa fa-picture-o"></i> <span class='adminText'>Blog</span></a></li>
+        <li><a href="{{ path('dashboard-user') }}"><i class="fa fa-users" aria-hidden="true"></i><span class="adminText"> Gestion des utilisateurs</span></a></li>
+        <li><a href="{{path('dashboard-account')}}" name="tab6"><i class="fa fa-wrench"></i><span class="adminText"> Informations personnelles</span></a></li>
+
+
+
+    </ul>
+
+</div>
+<div class="main text-center">
+    <div id="tab1 text-center">
+
+        <a href="{{ path('dashboard') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Tableau de bord</button></a><br/>
+        <a href="{{ path('dashboard-to-validate') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Valider observations</button></a><br/>
+        <a href="{{ path('dashboard-users') }}"><button class="btn btn-default  responsive-btn bouton-barre2 position-global">Valider naturalistes</button></a><br/>
+
+        <a href="{{ path('observation') }}"><button class="btn btn-default  responsive-btn bouton-barre2 position-global">Ajouter observations</button></a><br/>
+
+        <a href="{{path('dashboard-blog')}}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Blog</button></a><br/>
+        <a href="{{ path('dashboard-user') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Gestion des utilisateurs</button></a><br/>
+        <a href="{{path('dashboard-account')}}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Informations personnelles</button></a><br/>
+    </div>
+
+
+    {% elseif is_granted('ROLE_NATURALISTE')%}
+
+    <div>
+
+
+        <div class="slidebar size right-position">
+            <ul>
+                <li><a href="{{ path('dashboard') }}" name="tab1 dimension"><i class="fa fa-tachometer"></i><span class="adminText">Tableau de bord</span></a></li>
+                <li><a href="{{ path('dashboard-to-validate') }}" name="tab4 dimension"><i class="fa fa-check-square"></i><span class="adminText">Valider observations</span></a></li>
+                <li><a href="{{ path('observation') }}" name="tab3 dimension"><i class="fa fa-pencil"></i > <span class="adminText "> Ajouter observations </span></a></li>
+
+                <li><a href="{{path('dashboard-account')}}" name="tab6"><i class="fa fa-wrench"></i><span class="adminText"> Informations personnelles</span></a></li>
+
+
+
+            </ul>
+
+        </div>
+        <div class="main text-center">
+            <div id="tab1 text-center">
+
+                <a href="{{ path('dashboard') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Tableau de bord</button></a><br/>
+                <a href="{{ path('dashboard-to-validate') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Valider observations</button></a><br/>
+                <a href="{{ path('observation') }}"><button class="btn btn-default  responsive-btn bouton-barre2 position-global">Ajouter observations</button></a><br/>
+
+
+                <a href="{{path('dashboard-account')}}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Informations personnelles</button></a><br/>
+            </div>
+
+            {% elseif is_granted('ROLE_OBSERVATEUR')%}
+
+            <div>
+
+
+                <div class="slidebar size right-position">
+                    <ul>
+                        <li><a href="{{ path('dashboard') }}" name="tab1 dimension"><i class="fa fa-tachometer"></i><span class="adminText">Tableau de bord</span></a></li>
+
+                        <li><a href="{{ path('observation') }}" name="tab3 dimension"><i class="fa fa-pencil"></i > <span class="adminText "> Ajouter observations </span></a></li>
+
+                        <li><a href="{{path('dashboard-account')}}" name="tab6"><i class="fa fa-wrench"></i><span class="adminText"> Informations personnelles</span></a></li>
+
+
+                    </ul>
+
+                </div>
+                <div class="main text-center">
+                    <div id="tab1 text-center">
+
+                        <a href="{{ path('dashboard') }}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Tableau de bord</button></a><br/>
+
+                        <a href="{{ path('observation') }}"><button class="btn btn-default  responsive-btn bouton-barre2 position-global">Ajouter observations</button></a><br/>
+
+
+                        <a href="{{path('dashboard-account')}}"><button class="btn btn-default responsive-btn bouton-barre2 position-global">Informations personnelles</button></a><br/>
+                    </div>
+
+
+                    {% endif %}
+
+
+                    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+                    <!-- Javascript de Bootstrap -->
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+                    {% block body %}
+                    {% endblock %}
+
+

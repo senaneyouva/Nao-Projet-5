@@ -1,0 +1,146 @@
+{% extends 'BTNaoBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block body %}
+    <div class="owl-carousel">
+        {% image '@BTNaoBundle/Resources/public/images/slide1.jpg' %}
+        <div class="carousel-img" style="background: url('{{ asset_url }}') no-repeat">
+        {% endimage %}
+        <h1 class="h1-carousel">
+            <span class="main-title-carousel">Bienvenue sur le site de l'association <br>Nos Amis les Oiseaux.</span>
+            <span class="subtitle-carousel">Participer à notre programme de recherche</span>
+            <div class="text-center">
+                <a href="{{ path('user_registration') }}" class="btn btn-default btn-green btn-slide">Inscription</a>
+            </div>
+        </h1>
+
+        </div>
+
+        {% image '@BTNaoBundle/Resources/public/images/slide4.jpg' %}
+        <div class="carousel-img" style="background: url({{ asset_url }}) no-repeat">
+            <h1 class="h1-carousel">
+                <span class="main-title-carousel">Découvrez notre application</span>
+                <span class="subtitle-carousel">Grâce à NAO, initiez vous à l'ornithologie.</span>
+            </h1>
+
+            <div class="text-center">
+                <a href="#about" class="btn btn-default btn-green btn-slide">À propos</a>
+            </div>
+            {% endimage %}
+
+        </div>
+    </div>
+    <div class="how-works text-center" id="about">
+        <div class="container">
+        <div class="row">
+            <h1 class="text-center title-blue">Comment ça marche</h1>
+            <p class="how-works">Pour valider mes observations sur le terrain, rien de plus facile, suivez le guide :</p>
+            <div class="col-md-3 item-works">
+                <i class="fa fa-eye fa-5x"></i>
+                <h3>Observation</h3>
+                <p class="text-center">Grâce à notre barre de recherche  simplifié, vous avez accès à des milliers d'espèces répertoriés dans  la base de données TAXREF du musée d'histoire naturelles.
+                    De plus, vos différentes observation s'affiche avec différentes données sur une carte interactive.</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fa fa-pencil fa-5x"></i>
+                <h3>Saisie</h3>
+                <p class="text-center">Pour ajouter une observation, connectez vous à votre compte. Remplissez le formulaire de saisie en y ajoutant les informations demandées : date, heure, localisation, longitude et la latitude.
+                    <br> Ces données sont disponibles sur la carte interactive.</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fa fa-list-alt fa-5x"></i>
+                <h3>Suivi</h3>
+                <p class="text-center">Depuis votre espace personnel, accédez au tableau de bord de toutes vos observations. D'un seul coup d'oeuil, visualisez  le statut de vos observations. Ces dernières peuvent etre validée ou refusé par un professionnel.</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fa fa-check fa-5x"></i>
+                <h3>Validation</h3>
+                <p class="text-center">Mes observations sont validées par des naturalistes ou ornithologues ayant un compte NAO.</p>
+            </div>
+
+        </div>
+            <div class="text-center"><a href="{{ path('observation') }}" class="btn btn-default btn-green btn-middle">Observation</a></div>
+        </div>
+    </div>
+    {% image '@BTNaoBundle/Resources/public/images/gradient.jpg' %}
+        <div class="about" style="background: url({{ asset_url }}) no-repeat">
+    {% endimage %}
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center title-blue">Qui sommes nous ?</h2>
+                    <div class="col-md-6">
+                        {% image '@BTNaoBundle/Resources/public/images/iphone.png' %}
+                        <img src="{{ asset_url }}" alt="" class="img-responsive">
+                        {% endimage %}
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text-center h2-about">Notre histoire</h2>
+                        <p class="text-about">
+                            <strong>NAO</strong> (Nos amis les oiseaux) est une association de loi 1901. Elle a été créée en 2006 par un Monsieur Michel Dujardin, naturaliste de formation. L'association milite pour la <strong>démocratisation de l'ornithologie</strong> en France.
+
+                            Elle s'adresse aux passionnés d'oiseaux de tout horizon, qu'il soit novice, amateur ou professionnel.
+
+                            Forte de ses 200 adhérents et ses dizaines de bénévoles, NAO est une des premières association d'ornithologie en ile de france.
+
+                            Notre association a pour objectif de participer à la protection de la faune et la flore en mettant en place différents programmes  de recherche visant à étudier les effets du climat, de l’urbanisation et de l’agriculture sur la biodiversité.
+
+                            Nos amis les oiseaux est présidée par son fondateur, monsieur Michel Dujardin.
+                        </p>
+                        <h2 class="text-center h2-about">L'application NAO</h2>
+                        <p class="text-about">
+                            L'idée d'une application participative est née d'un constat simple : à l'heure du digital et du smartphone, il est devenu primordial d'avoir une application compatible smartphone pour <strong>l'identification des oiseaux</strong>.
+
+                            L'association a voulu que le programme soit participatif et ouvert à tous. Des naturalistes certifiés et des ornithologues ont pris part à ce projet en partenariat avec le musée d'histoire naturelle.
+
+                            Notre objectif est le partage des connaissances entre tous les utilisateurs afin de promouvoir notre programme de recherche sur la <strong>bio diversité</strong>.
+                        </p>
+                    </div>
+                    <div class="text-center"><a href="{{ path('contact') }}" class="btn btn-default btn-green btn-middle">Nous contacter</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="three-obs">
+           <div class="container">
+               <h2 class="text-center title-blue">Dernières observations</h2>
+               <div class="row">
+                   {% for observation in observations  %}
+                       <div class="col-md-4 col-obs">
+                           <div class="card text-center">
+                               <div class="card-header-observation">
+                                   {% if observation.observationName == null %}
+                                       {% image '@BTNaoBundle/Resources/public/images/default-img.jpeg' %}
+                                       <img src="{{ asset_url }}" class="img-responsive">
+                                       {% endimage %}
+                                   {% else %}
+                                       <img src="{{ vich_uploader_asset(observation, 'observationFile') }}" class="img-responsive">
+                                   {% endif %}
+                               </div>
+                               <div class="card-body">
+                                   <h4 class="text-muted">{{ observation.user.firstname }} {{ observation.user.lastname }}</h4>
+                                   <p>Observé le {{ observation.date|date('d/m/Y') }}</p>
+                                   <a href="{{ path('observation-single', {'id': observation.id} ) }}" class="btn btn-default btn-green">Consulter l'observation</a>
+
+                               </div>
+                           </div>
+                       </div>
+                   {% endfor %}
+
+               </div>
+           </div>
+        </div>
+{% endblock %}
+{% block javascript %}
+    {% javascripts '@BTNaoBundle/Resources/public/js/owl.carousel.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(document).ready(function() {
+            $('.owl-carousel').owlCarousel({
+                items: 1,
+                loop: true,
+                autoplay:true,
+                autoplayTimeout:6000,
+            });
+        });
+    </script>
+{% endblock %}

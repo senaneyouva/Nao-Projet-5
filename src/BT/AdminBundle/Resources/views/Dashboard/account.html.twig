@@ -1,0 +1,51 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+    <h1  class="titre-informations ">Modifications des informations personnelles </h1>
+          <p>
+            {% for message in app.flashes('success3') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+            {% endfor %}
+        </p>
+      <div class="col-md-8  position-informations ">
+
+        {{ form_start(form) }}
+       <div class="row">
+          <div class="col-sm-12 col-md-10 ">
+         
+                    {{ form_widget(form.firstname) }}
+                    {{ form_errors(form.firstname) }}
+
+                    </div>
+              
+            <div class="col-sm-12 col-md-10">
+                    {{ form_widget(form.lastname) }}
+                    {{ form_errors(form.lastname) }}
+                </div>
+            </div>
+
+           <div class="row">
+            <div class="col-sm-12 col-md-10">
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="col-sm-12 col-md-10">
+                    {{ form_widget(form.username) }}
+                    {{ form_errors(form.username) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="text-left">
+                <p class="btn btn-default espace-btn-admin"><a href="{{path('dashboard-password')}}">Modifier votre mot de passe</a> </p><br/>
+        {{ form_widget(form.save,{'label':  "Valider les informations ", 'attr': {'class': 'btn btn-default btn-four'}})}}
+                </div>
+            </div>
+        {{ form_end(form) }}
+                  
+    </div>
+
+
+{% endblock %}

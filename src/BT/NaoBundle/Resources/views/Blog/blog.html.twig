@@ -1,0 +1,45 @@
+{% extends 'BTNaoBundle::layout.html.twig' %}
+{% block title %} Blog - {{ parent() }} {% endblock %}
+{% block body %}
+    <style>
+        .extrait-post-blog > p {
+            margin: 0 !important;
+            font-size: 14px !important;
+            color: #000000 !important;
+            font-weight: normal !important;
+        }
+        .extrait-post-blog {
+            min-height: 120px;
+        }
+
+        .title-blog {
+            font-size: 20px;
+        }
+    </style>
+    <div class="img-banner">
+        {% image '@BTNaoBundle/Resources/public/images/retouche-blog.jpg' %}
+        <img src="{{ asset_url }}" alt="" class="img-responsive">
+        {% endimage %}
+    </div>
+    <div class="container">
+
+        <div class="row posts">
+            {% for post in pagination  %}
+                <div class="col-md-6">
+                    <img src="{{ vich_uploader_asset(post, 'imageFile') }}" class="img-responsive">
+                    <h3 class="text-center title-blog">{{ post.title }}</h3>
+                    <p class="text-muted text-center date-blog">{{ post.date|date('d/m/Y') }}</p>
+                    <div class="extrait-post-blog">
+                        {{ post.content[:255]|raw }}
+                    </div>
+                    <div class="read text-center" style="margin-bottom: 25px"><a href="{{ path('blog-single', {'id': post.id}) }}" class="btn btn-green btn-middle">Voir plus</a></div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    </div>
+    
+{% endblock %}

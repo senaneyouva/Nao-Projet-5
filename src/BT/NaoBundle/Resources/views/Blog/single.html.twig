@@ -1,0 +1,52 @@
+{% extends 'BTNaoBundle::layout.html.twig' %}
+{% block title %} {{ post.title }} - {{ parent() }} {% endblock %}
+{% block body %}
+    <div class="container">
+
+        <div class="post-content" style="padding-bottom: 20px">
+            <h1 class="text-center title-post">{{ post.title }}</h1>
+            <div id="share"></div>
+            <div class="img-post text-center" style="width: 100%; margin: auto">
+                <img src="{{ vich_uploader_asset(post, 'imageFile') }}" class="img-responsive">
+            </div>
+            <div class="row ">
+                <div class="col-md-3 text-center" style="padding-top: 20px">
+                    <img src="{{ gravatar }}" alt="" class="img-circle">
+                    <h2 class="h2-post text-center">{{ post.author.firstname }} {{ post.author.lastname }}</h2>
+                </div>
+                <div class="col-md-9">
+                    <div class="text-justify">
+                        <div class="text-content-post">
+                            <p class="text-muted">Publié le {{ post.date|date('d/m/Y') }}</p>
+                            {{ post.content|raw }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center newsletter-blog">
+                <p>Vous souhaitez recevoir nos articles avant leurs publication ? </p>
+                <p>Inscrivez vous à notre newsletter</p>
+                <div class="form-group">
+                    <form action="{{ path('newsletter') }}" class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-mail" placeholder="email" name="email">
+                        </div>
+                        <button class="btn btn-green" type="submit">S'abonner</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        $('#share').jsSocials({
+            shares: ["twitter", "facebook", "pinterest"]
+        });
+    </script>
+{% endblock %}

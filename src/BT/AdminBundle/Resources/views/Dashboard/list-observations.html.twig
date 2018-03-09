@@ -1,0 +1,87 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+
+<div class="container">
+<h1 class="text-center color-bleu position-observation position-global3">Observation(s) en attente(s) </h1>
+    <div class="container">
+
+
+ <div class="container position-global3">
+    <p class="position-signal">
+        {% for message in app.flashes('notice') %}
+    <div class="alert alert-success">
+            {{ message }}
+    </div>
+        {% endfor %}
+    </p>
+    <p class="position-signal">
+        {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+    </p>
+    <p class="position-signal">
+        {% for message in app.flashes('signal') %}
+    <div class="alert alert-danger">
+            {{ message }}
+    </div>
+        {% endfor %}
+    </p>
+
+            {% for observation in observations  %}
+
+                <div class="jumbotron">
+                    <div class="emplacement container">
+                        <div class="col-md-5 place row" >
+                            {% if observation.observationName == null %}
+                                {% image '@BTNaoBundle/Resources/public/images/default-img.jpeg' %}
+                                <img src="{{ asset_url }}" class="img-responsive">
+                                {% endimage %}
+                            {% else %}
+                                <img src="{{ vich_uploader_asset(observation, 'observationFile') }}" class="img-responsive">
+                            {% endif %}
+                            <h3 class="text-center"> {{ observation.user.firstname }} {{ observation.user.lastname }} </h3>
+                            <h5 class="text-center"> Le {{ observation.date|date('d/m/Y') }}</h5>
+
+                            <h4 class="text-center"> {{ observation.bird.nomVern }} </h4>
+                            <h4 class="text-center"> Longitude : {{ observation.longitude }}</h4>
+                            <h4 class="text-center"> Latitude : {{ observation.latitude }} </h4>
+
+                            <div class="form-group">
+                                <label class="col-md-4 " ></label>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <a href="{{ path('dashboard-validate-observation', {'id': observation.id}) }}" class="btn btn-success btn-valide">Valider</a>
+
+                                    </div>
+                                    <a href="{{ path('dashboard-refuse-observation', {'id': observation.id}) }}" class="btn btn-danger btn-valide ">Refuser
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 ">
+                        <div id="mapid" style="height: 600px"></div>
+                    </div>
+                </div>
+            </div>
+
+                <script>
+                    var mymap = L.map('mapid').setView([{{ observation.latitude }}, {{ observation.longitude }}], 17);
+                    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxlY2t2aW5jZW50IiwiYSI6ImNqOWgxcmVnZzJ6YjYycXQ0c2lwd3NwYWQifQ.ECfnUX5KCYOByUbS0noiLg', {
+                        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                        maxZoom: 18,
+                        id: 'mapbox.streets',
+                        accessToken: 'pk.eyJ1IjoiYWxlY2t2aW5jZW50IiwiYSI6ImNqOWgxcmVnZzJ6YjYycXQ0c2lwd3NwYWQifQ.ECfnUX5KCYOByUbS0noiLg'
+                    }).addTo(mymap);
+                    L.marker([{{ observation.latitude }}, {{ observation.longitude }}]).addTo(mymap);
+                </script>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {{ knp_pagination_render(observations) }}
+    </div>
+    </div>
+{% endblock %}

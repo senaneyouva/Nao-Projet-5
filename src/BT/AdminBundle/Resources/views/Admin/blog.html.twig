@@ -1,0 +1,41 @@
+{% extends 'BTAdminBundle::layout.html.twig' %}
+{% block body %}
+    <div class="container-fluid blog-position">
+
+        <h3 class="text-center blog-position2 ">Articles  Publiés</h3>
+        <a href="{{path('dashboard-blog-add')}}"><button class="btn btn-default btn-lg bouton-valide ">Ajouter un Article</button></a><br/>
+        <div class="row">
+         <p class="position-signal2">
+         {% for message in app.flashes('signal') %}
+        <div class="alert alert-success">
+                {{ message }}
+        </div>
+            {% endfor %}
+        </p>
+        <p class="position-signal2">
+            {% for message in app.flashes('signal2') %}
+        <div class="alert alert-danger">
+                {{ message }}
+        </div>
+            {% endfor %}
+        </p>
+        {% for post in posts  %}
+            <div class="col-sm-3 col-xs-12">
+       
+                <hr class="hrFonctionnement">
+                <div class="text-center">
+                    <span class="img-blog"><img src="{{ vich_uploader_asset(post, 'imageFile') }}" class="img-responsive img-blog"></span>
+                    <h4 class="color-text-bleu2 text-blog"><strong>{{ post.title }}</strong></h4>
+                    <h5 class="color-text-bleu2" ><strong>Publié le  {{ post.date|date('d/m/Y') }} </strong></h5>
+                </div>
+                <div class="link-post">
+                    <a href="{{ path('blog-single', {'id' : post.id }) }}"> <button type="button" class="btn btn-primary bouton-valide" >Voir Plus</button></a>
+                    <a href="{{ path('dashboard-blog-remove', {'id': post.id}) }}"> <button type="button" class="btn btn-danger " >Supprimer</button></a>
+                    <a href="{{ path('dashboard-blog-edit', {'id': post.id}) }}"> <button type="button" class="btn btn-primary " >Modifier</button></a>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+ 
+{% endblock %}

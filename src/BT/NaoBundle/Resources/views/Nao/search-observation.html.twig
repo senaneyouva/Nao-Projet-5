@@ -1,0 +1,21 @@
+{% for observation in observations  %}
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-header-observation">
+                {% if observation.observationName == null %}
+                    {% image '@BTNaoBundle/Resources/public/images/default-img.jpeg' %}
+                    <img src="{{ asset_url }}" class="img-responsive">
+                    {% endimage %}
+                {% else %}
+                    <img src="{{ vich_uploader_asset(observation, 'observationFile') }}" class="img-responsive">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <p class="text-muted">{{ observation.user.firstname }} {{ observation.user.lastname }}</p>
+                <p>Observé le {{ observation.date|date('d/m/Y') }}</p>
+                <a href="{{ path('observation-single', {'id': observation.id} ) }}" class="btn btn-default btn-green">Consulter l'observation</a>
+
+            </div>
+        </div>
+    </div>
+{% endfor %}

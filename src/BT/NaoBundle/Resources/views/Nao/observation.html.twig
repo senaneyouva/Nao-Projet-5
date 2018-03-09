@@ -1,0 +1,137 @@
+{% extends 'BTNaoBundle::layout.html.twig' %}
+{% block title %} Observations - {{ parent() }} {% endblock %}
+{% block body %}
+    {% image '@BTNaoBundle/Resources/public/images/binocular.jpg' %}
+    <div class="banner-title" style="background-image: url({{ asset_url }})">
+    {% endimage %}
+        <div class="container">
+            <h1 class="h1-page">Observation</h1>
+        </div>
+    </div>
+    <div class="container">
+        {% if is_granted('ROLE_OBSERVATEUR') != false %}
+            <div class="row">
+                <div class="col-md-12 btn-observation"><button class="btn bouton-color-ajout btn-green"><i class="fa fa-plus"></i> Ajouter une observation</button> <button class="btn btn-danger btn-remove"><i class="fa fa-times"></i> Annuler</button></div>
+                {{ form_start(form) }}
+                <div class="form-observation">
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label><i class="fa fa-calendar"></i> Date *</label>
+                                {{ form_widget(form.date) }}
+                                {{ form_errors(form.date) }}
+
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label><i class="fa fa-map-marker"></i> Longitude *</label>
+                                {{ form_widget(form.longitude) }}
+                                {{ form_errors(form.longitude) }}
+
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label><i class="fa fa-map-marker"></i> Latitude *</label>
+                                {{ form_widget(form.latitude) }}
+                                {{ form_errors(form.latitude) }}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label><i class="fa fa-search"></i> Rechercher une espece d'oiseau *</label>
+                                <input type="text" class="bird form-control" id="search">
+                                <input type="hidden" class="data-observation" name="birds">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label><i class="fa fa-picture-o"></i> Inserer une image</label>
+                                {{ form_widget(form.observationFile) }}
+                                {{ form_errors(form.observationFile) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-group">
+                            <label><i class="fa fa-comment"></i> Description de l'observation *</label>
+                            {{ form_widget(form.content) }}
+                            {{ form_errors(form.content) }}
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="well">
+                                <p>Les champs marqués d'une étoile * sont obligatoire.</p>
+                                <p>Merci de selectionner une espèce d'oiseau dans la liste.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        {{ form_widget(form.save, {'label': 'Valider l\'observation'}) }}
+                    </div>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+            {{ form_errors(form) }}
+            {% for success in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ success }}
+                </div>
+            {% endfor %}
+            {% for error in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            {% else %}
+                <div class="alert alert-info">Vous n'êtes pas connecté. Si vous souhaitez ajouter une observation, <a
+                            href="{{ path('login') }}"><span class="link">connectez vous</span></a> ou <a href="{{ path('user_registration') }}"><span class="link">créez un compte.</span></a></div>
+        {% endif %}
+        <hr>
+        <h2 class="text-center text-uppercase h2-page">Rechercher une observation</h2>
+        <p class="text-muted">3 caractères minimum.</p>
+        <form id="form-submit">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg searchTerm" placeholder="Taper le nom d'un oiseau" />
+                    <input type="hidden" class="data-holder">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+        <input type="hidden" class="data-holder">
+        <div class="row ajax-observation">
+            {% for observation in observations  %}
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header-observation">
+                            {% if observation.observationName == null %}
+                                {% image '@BTNaoBundle/Resources/public/images/default-img.jpeg' %}
+                                <img src="{{ asset_url }}" class="img-responsive">
+                                {% endimage %}
+                            {% else %}
+                                <img src="{{ vich_uploader_asset(observation, 'observationFile') }}" class="img-responsive">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h4>{{ observation.bird.nomVern }}</h4>
+                            <p class="text-muted">{{ observation.user.firstname }} {{ observation.user.lastname }}</p>
+                            <p>Observé le {{ observation.date|date('d/m/Y') }}</p>
+                            <a href="{{ path('observation-single', {'id': observation.id} ) }}" class="btn btn-default btn-green">Consulter l'observation</a>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(observations) }}
+        </div>
+    </div>
+
+
+{% endblock body %}
+{% block javascript %}
+    <script src="{{ asset('bundles/btnao/js/jquery.easy-autocomplete.js') }}"></script>
+    {% javascripts '@BTNaoBundle/Resources/public/js/app.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
